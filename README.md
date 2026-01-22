@@ -1,105 +1,181 @@
-# TraceFace-AI
+# TraceFace AI
 
-## 🇹🇷 Proje Açıklaması (TR)
+## 🇹🇷 Türkçe
 
-**TraceFace with AI**, gerçek zamanlı yüz algılama ve takibi üzerine kurulu bir bilgisayarlı görü projesidir.  
-Bu projede, bilgisayar kamerası kullanılarak canlı görüntü üzerinden yüzler tespit edilmekte ve algılanan yüzler çerçeve içine alınarak görsel olarak işaretlenmektedir.
+**TraceFace AI**, yapay zeka ve bilgisayarlı görü teknikleri kullanarak yüz algılama ve yüz tanıma işlemlerini gerçekleştiren bir projedir.  
+Proje, hem **gerçek zamanlı kamera akışı** hem de **statik görüntüler** üzerinde çalışabilecek şekilde adım adım geliştirilmektedir.
 
-### 🎯 Projenin Temel Amacı
-- Yapay zeka destekli yüz algılama sistemlerinin temellerini öğrenmek
-- Gerçek zamanlı kamera işleme mantığını kavramak
-- Daha ileri aşamalarda (**yüz tanıma, kayıt, loglama, anormallik tespiti** vb.) geliştirilebilecek bir altyapı oluşturmaktır
+Amaç, kayıp kişi / aranan şahıs tespiti gibi senaryolar için güçlü ve genişletilebilir bir altyapı oluşturmaktır.
 
 ---
 
-### ✅ Şu Ana Kadar Yapılanlar (Aşama 1–2)
-- Python sanal ortamı (**venv**) oluşturuldu
+## Projenin Amaçları
+
+- Yapay zeka destekli yüz algılama ve tanıma sistemlerini öğrenmek
+- Gerçek zamanlı ve görüntü tabanlı yüz işleme mantığını kavramak
+- Performans optimizasyonu (FPS, cache, ölçekleme) uygulamalarını deneyimlemek
+- Akademik ve profesyonel portföyde kullanılabilecek bir proje geliştirmek
+
+---
+
+## Şu Ana Kadar Yapılanlar
+
+### Aşama 1 – Gerçek Zamanlı Yüz Algılama
+- Python sanal ortamı (venv) oluşturuldu
 - Gerekli kütüphaneler kuruldu
-- Bilgisayar kamerası başarıyla açıldı
-- **OpenCV** ile gerçek zamanlı video akışı alındı
-- **Haar Cascade** modeli kullanılarak yüz algılama yapıldı
-- Algılanan yüzler **bounding box (dikdörtgen)** ile çizdirildi
+- OpenCV ile kamera erişimi sağlandı
+- Haar Cascade modeli kullanılarak yüz algılama gerçekleştirildi
+- Algılanan yüzler canlı görüntü üzerinde işaretlendi
+
+### Aşama 2 – Altyapı ve Model Yapılandırması
+- Proje klasör yapısı oluşturuldu
+- Model dosyaları (`shape_predictor_68_face_landmarks.dat`) harici klasöre taşındı
+- dlib ve face_recognition bağımlılıkları test edildi
+- Model yükleme ve doğrulama testleri başarıyla tamamlandı
+
+### Aşama 3 – Görüntü Üzerinde Yüz Tanıma (Image-Based Recognition)
+- `known_faces/` klasörü üzerinden bilinen yüzler yüklendi
+- Statik bir fotoğraf üzerinde yüz tanıma eklendi
+- Mouse ile:
+  - Görüntü sürükleme (pan)
+  - Yakınlaştırma / uzaklaştırma (zoom)
+- FPS artırımı için:
+  - Görüntü ölçekleme
+  - Aralıklı yüz tanıma
+  - Tanıma sonuçlarının cache’lenmesi
+- Kullanıcı görüntüyü her hareket ettirdiğinde yüz tanıma yeniden çalışacak şekilde optimize edildi
 
 ---
 
-### ⚙️ Bu Aşamada Sistem Ne Yapıyor?
-- Kamerayı açar
-- Görüntüyü sürekli okur
-- Yüzleri algılar
-- Algılanan yüzleri anlık olarak ekranda gösterir
+## Kullanılan Teknolojiler ve Kütüphaneler
+
+- Python 3.10.9
+- OpenCV (cv2) – Kamera ve görüntü işleme
+- NumPy – Görüntü verisi işlemleri
+- dlib – Yüz landmark ve tanıma altyapısı
+- face_recognition – Yüksek seviye yüz tanıma API
+- Haar Cascade Classifier – Yüz algılama modeli
 
 ---
 
-### 🛠️ Kullanılan Teknolojiler ve Kütüphaneler
-- **Python 3.10.9**
-- **OpenCV (cv2)** – Kamera erişimi ve görüntü işleme
-- **NumPy** – Görüntü verileriyle matematiksel işlemler
-- **Haar Cascade Classifier** – Yüz algılama modeli
+## Proje Yapısı
+
+traceface-ai/
+│
+├── src/
+│ ├── face_detect_camera.py
+│ ├── face_recognition_camera.py
+│ ├── face_recognition_image.py
+│ ├── image_face_recognition_fast.py
+│ ├── image_face_recognition_pan_zoom.py
+│ ├── image_face_recognition_viewer.py
+│ ├── test_predictor.py
+│
+├── known_faces/
+│ ├── person1/
+│ ├── person2/
+│
+├── models/
+│ └── shape_predictor_68_face_landmarks.dat
+│
+├── venv/
+├── README.md
+└── requirements.txt
+
 
 ---
 
-### 📌 Projenin Mevcut Durumu
-✔ Kamera çalışıyor  
-✔ Yüz algılama başarılı  
-✔ Gerçek zamanlı çizim aktif  
+## Mevcut Durum
+
+- Kamera üzerinden yüz algılama çalışıyor
+- Statik görüntülerde yüz tanıma çalışıyor
+- Pan & zoom destekli etkileşimli görüntüleme mevcut
+- Performans optimizasyonları uygulanmış durumda
 
 ---
 
-### 🚀 Bir Sonraki Aşamalar
-- Yüz tanıma
-- Kişi eşleştirme
-- Kayıt alma
-- Alarm / log sistemi
+## Planlanan Geliştirmeler
+
+- Gerçek zamanlı yüz tanıma
+- Kişi kayıt ve veri tabanı entegrasyonu
+- Loglama ve zaman damgalı kayıt sistemi
+- Alarm / bildirim mekanizması
+- Web arayüz (dashboard)
+- Video dosyası üzerinden analiz
 
 ---
 
-## 🇬🇧 Project Description (EN)
+## 🇬🇧 English
 
-**TraceFace with AI** is a computer vision project focused on real-time face detection and tracking.  
-The system uses a computer camera to detect human faces in a live video stream and visually marks detected faces with bounding boxes.
+**TraceFace AI** is a computer vision project focused on face detection and face recognition using artificial intelligence techniques.  
+The system is designed to work with both **real-time camera streams** and **static images**, following a step-by-step development approach.
 
-### 🎯 Project Goals
-- Learning the fundamentals of AI-based face detection systems
-- Understanding real-time camera processing
-- Building a solid foundation for future features such as **face recognition, logging, and anomaly detection**
+The long-term goal is to build a scalable foundation for scenarios such as missing person or wanted individual detection systems.
 
 ---
 
-### ✅ What Has Been Done So Far (Stage 1–2)
-- Python virtual environment (**venv**) created
+## Project Goals
+
+- Learn AI-based face detection and recognition systems
+- Understand real-time and image-based vision processing
+- Apply performance optimization techniques (FPS, caching, scaling)
+- Build a strong portfolio project suitable for internships and professional use
+
+---
+
+## Progress So Far
+
+### Stage 1 – Real-Time Face Detection
+- Python virtual environment created
 - Required dependencies installed
-- Camera successfully accessed
-- Real-time video stream captured using **OpenCV**
-- Face detection implemented using **Haar Cascade**
-- Detected faces are drawn with **bounding boxes**
+- Camera access via OpenCV
+- Face detection using Haar Cascade
+- Live bounding box drawing
+
+### Stage 2 – Infrastructure & Model Setup
+- Clean project structure established
+- External model management implemented
+- dlib and face_recognition validated
+- Predictor loading tested successfully
+
+### Stage 3 – Image-Based Face Recognition
+- Known faces loaded from `known_faces/` directory
+- Face recognition on static images implemented
+- Interactive image viewer with:
+  - Mouse-based pan
+  - Zoom in / out
+- Performance optimizations:
+  - Image downscaling
+  - Timed recognition
+  - Recognition result caching
+- Recognition recalculated dynamically during image navigation
 
 ---
 
-### ⚙️ Current System Capabilities
-- Opens the camera
-- Continuously reads frames
-- Detects faces
-- Displays detected faces in real time
+## Technologies & Libraries
+
+- Python 3.10.9
+- OpenCV
+- NumPy
+- dlib
+- face_recognition
+- Haar Cascade Classifier
 
 ---
 
-### 🛠️ Technologies and Libraries Used
-- **Python 3.10.9**
-- **OpenCV (cv2)** – Camera access and image processing
-- **NumPy** – Mathematical operations on image data
-- **Haar Cascade Classifier** – Face detection model
+## Current Status
+
+- Real-time face detection: working
+- Image-based face recognition: working
+- Interactive pan & zoom: implemented
+- Optimized FPS and smooth user experience
 
 ---
 
-### 📌 Current Project Status
-✔ Camera access working  
-✔ Face detection successful  
-✔ Real-time drawing enabled  
+## Upcoming Features
 
----
-
-### 🚀 Next Stages
-- Face recognition
-- Identity matching
-- Face registration
-- Logging and alert systems
+- Real-time face recognition
+- Face registration and database integration
+- Logging and alert system
+- Web-based dashboard
+- Video file analysis
